@@ -23,6 +23,29 @@ Time Filter - CP
 
 [Report Date] >= [Start Date Parameter]-[Week Count Parameter] AND [Report Date] <= [End Date Parameter]
 
+--------------------------------------------------------------------------------------------------------
+If wanting to show the actual dates within the time window selected.
+
+Add a Timeframe Filter Calculated Field, drag it to filter area and select 0.
+
+IF 
+    [sent_date] >= [Start Date Parameter] AND 
+    [sent_date] <= [End Date Parameter] THEN 0
+ELSEIF 
+    [sent_date] >= [Start Date Parameter]-([End Date Parameter]-[Start Date Parameter]+1) AND 
+    [sent_date] < [Start Date Parameter] THEN 1
+ELSEIF 
+    [sent_date] >= [Start Date Parameter] - 365 AND 
+    [sent_date] <= [End Date Parameter] - 365 THEN 2
+ELSEIF
+    [sent_date] >= [Comparison Start Date Parameter] AND
+    [sent_date] <= [Comparison End Date Parameter] THEN 3
+ELSEIF
+    [sent_date] >= [Fiscal YoY Comparison - Start Date] AND
+    [sent_date] <= [Fiscal YoY Comparison - End Date] THEN 4
+END
+----------------------------------------------------------------------------------------------------------
+
 Week Count Parameter
 
 Data type: Integer
